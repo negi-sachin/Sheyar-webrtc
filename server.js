@@ -7,6 +7,9 @@ var io = require("socket.io")(server, {
 });
 
 app.use(express.static(__dirname + "/Client"));
+app.get("/ping", function (req, res, next) {
+  res.send("Pong");
+});
 app.get("/*", function (req, res, next) {
   res.sendFile(__dirname + "/Client/index.html");
 });
@@ -89,6 +92,7 @@ io.on("connection", function (client) {
   });
 });
 
-server.listen(process.env.PORT || 3000, () => {
-  console.log("Server Running");
+const port = process.env.PORT || 3000
+server.listen(port, () => {
+  console.log("Server Running at port: "+port);
 });
